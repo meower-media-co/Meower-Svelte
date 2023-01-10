@@ -30,7 +30,7 @@
 		>
 			<span
 				>Your quote is a small piece of text that will be displayed
-				publically on your profile.</span
+				publicly on your profile.</span
 			><br /><br />
 			<input
 				type="text"

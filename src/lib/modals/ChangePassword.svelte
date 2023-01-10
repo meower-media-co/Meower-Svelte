@@ -39,6 +39,10 @@
 					cmd: "direct",
 					val: {cmd: "change_pswd", val: e.target[1].value},
 				});
+				await clm.meowerRequest({
+					cmd: "direct",
+					val: {cmd: "del_tokens", val: ""},
+				});
 
 				$modalShown = false;
 

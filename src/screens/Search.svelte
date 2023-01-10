@@ -10,7 +10,7 @@
 <div class="Search">
 	<Container>
 		<h1>Search</h1>
-		meower search, statistics and more
+		meower search, statistics and more!
 	</Container>
 	<Container>
 		<div class="settings-controls">

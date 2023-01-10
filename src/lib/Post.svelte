@@ -39,6 +39,7 @@
 		"https://http.meower.org/",
 		"https://assets.meower.org/",
 		"https://api.meower.org/",
+		"https://forums.meower.org/",
 		// not everyone can add urls to go.meower.org, should be fine
 		"https://go.meower.org/",
 

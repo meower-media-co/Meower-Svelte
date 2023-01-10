@@ -258,7 +258,7 @@
 					(Several features will be unavailable while not logged in.)
 				</p>
 				<div>
-					<p class="small">Meower Svelte v1.5.1</p>
+					<p class="small">Meower Svelte v1.5.3</p>
 					<img src={meowy} alt="" height="64" />
 				</div>
 			</div>
