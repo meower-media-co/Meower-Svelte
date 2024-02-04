@@ -29,7 +29,9 @@
 	import {goto} from "@roxi/routify";
 	import {onMount, tick} from "svelte";
 
-	export let post = {};
+	export let post = {
+		content: ""
+	};
 	export let buttons = true;
 	export let input = null;
 	export let adminView = false;
@@ -191,7 +193,7 @@
 			// add quote containers to blockquotes (although, quotes are currently broken)
 			renderedContent = renderedContent.replaceAll(
 				/<blockquote>(.+?)<\/blockquote>/gms,
-				'<div class="quote-container"><blockquote>$1</blockquote></div>'
+				'<blockquote><p>$1</p></blockquote>'
 			);
 
 			if ($user.embeds_enabled) {
@@ -344,18 +346,39 @@
 						<button
 							class="circle reply"
 							on:click={() => {
-								let existingText = input.value;
+								let existingText = input.value.trim();
 
 								const mentionRegex = /^@\w+\s*/i;
 								const mention = "@" + post.user + " ";
 
 								if (mentionRegex.test(existingText)) {
-									input.value = existingText
+									existingText = existingText
 										.trim()
 										.replace(mentionRegex, mention);
 								} else {
-									input.value = mention + existingText.trim();
+									existingText = mention + existingText.trim();
 								}
+								existingText += "\n";
+								let snipped = false;
+								/* @type {string[]} */
+								let iter = post.content.split("\n");
+
+
+								iter.forEach(element => {
+
+									if (element.replaceAll(/\s/g, '').startsWith(">")) {
+										if (!snipped) {
+											snipped = true;
+											existingText += "> > [snip]\n";
+											return;
+										}
+										return;
+									}
+									snipped = false;
+									existingText += "> " + element + "\n";
+								});
+								existingText += "\n";
+								input.value = existingText;
 
 								input.focus();
 							}}
@@ -656,4 +679,18 @@
 		border-radius: 10px;
 		width: 50%;
 	}
+
+
+	:global(blockquote) {
+		margin: 0.25em;
+		border-left: 4px solid var(--orange-dark);
+	}
+
+	:global(blockquote p) {
+		margin-left: 1em;
+	}
+	:global(blockquote blockquote) {
+		margin-left: 1em;
+	}
+
 </style>
