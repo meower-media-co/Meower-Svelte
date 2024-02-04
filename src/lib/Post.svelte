@@ -12,7 +12,7 @@
 	import ReportPostModal from "./modals/safety/ReportPost.svelte";
 	import ModeratePostModal from "./modals/moderation/ModeratePost.svelte";
 
-	import {authHeader, user, chat, ulist} from "../lib/stores.js";
+	import {authHeader, user, chat, ulist, customTheme} from "../lib/stores.js";
 	import {adminPermissions, hasPermission} from "../lib/bitField.js";
 	import {apiUrl} from "./urls.js";
 	import {shiftHeld} from "../lib/keyDetect.js";
@@ -28,6 +28,7 @@
 	import twemoji from "twemoji";
 	import {goto} from "@roxi/routify";
 	import {onMount, tick} from "svelte";
+	import { fallback } from "./CustomTheme";
 
 	export let post = {};
 	export let buttons = true;
@@ -47,6 +48,10 @@
 
 	let adminDeleteButton, adminRestoreButton;
 
+	let creatordate = null;
+	let postHeader = null;
+	let postContent = null;
+	let originalTheme = fallback;
 	// TODO: make bridged tag a setting
 
 	/**
@@ -54,6 +59,11 @@
 	 */
 	export async function initPostUser() {
 		if (!post.user) return;
+		if ($customTheme.style == "small") {
+			toggleClass(creatordate, "small-creator"); toggleClass(creatordate, "creatordate");
+			toggleClass(postHeader, "small-creator"); toggleClass(postHeader, "post-header");
+		}
+		originalTheme = $customTheme;
 
 		if (post.content.includes(":")) {
 			bridged =
@@ -67,6 +77,8 @@
 			post.user = post.content.split(": ")[0];
 			post.content = post.content.slice(post.content.indexOf(": ") + 2);
 		}
+		if (post.content == "")
+			post.content = "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ";
 
 		if (!webhook) loadProfile(post.user);
 	}
@@ -286,10 +298,38 @@
 		post.user === "Announcement" ||
 		post.user === "Server" ||
 		webhook;
-</script>
 
-<Container>
-	<div class="post-header">
+
+	function toggleClass(element, classname) {
+		if (element.classList.contains(classname)) {
+			element.classList.remove(classname);
+		} else {
+			element.classList.add(classname);
+		}
+	}
+	/*
+	 * @type {Container}
+	*/
+
+
+	customTheme.subscribe((theme) => {
+		if (!creatordate) return;
+		if (!postHeader) return;
+
+		if (theme.style !== originalTheme.style) {
+			toggleClass(postHeader, "small-creator"); toggleClass(postHeader, "post-header");
+			toggleClass(creatordate, "small-creator"); toggleClass(creatordate, "creatordate");
+			originalTheme = theme;
+		}
+
+	});
+
+
+</script>
+<div class="post">
+<Container >
+
+	<div class="post-header" bind:this={postHeader}>
 		{#if buttons}
 			<div class="settings-controls">
 				{#if adminView && hasPermission(adminPermissions.DELETE_POSTS)}
@@ -452,7 +492,7 @@
 				/>
 			{/await}
 		</button>
-		<div class="creatordate">
+		<div class="creatordate" bind:this={creatordate}>
 			<div class="creator">
 				<h2>
 					<LiText text={post.user} />
@@ -472,6 +512,11 @@
 					/>
 				{/if}
 
+				{#if $customTheme.style == "small"}
+					<FormattedDate date={post.date} />
+				{/if}
+
+
 				<!-- disabled until proper bot badges are added
 				{#if post.isvbot && !webhook}
 					<Badge
@@ -486,8 +531,9 @@
 				{/if}
 				-->
 			</div>
-
-			<FormattedDate date={post.date} />
+			{#if $customTheme.style === "large"}
+				<FormattedDate date={post.date} />
+			{/if}
 			{#if post.edited_at}
 				<i
 					>(<FormattedDate
@@ -513,6 +559,7 @@
 			{/if}
 		</div>
 	</div>
+
 	{#if editing}
 		<textarea
 			type="text"
@@ -574,26 +621,44 @@
 				}}>Save</button
 			>
 		</div>
-	{:else}
-		<p class="post-content" style="border-left-color: #4b5563;">
+	{:else if $customTheme.style === "large"}
+		<p class="post-content" style="border-left-color: #4b5563;" bind:this={postContent}>
 			{#await addFancyElements(post.content) then content}
 				{@html content}
 			{/await}
 		</p>
+	{:else}
+		<br>
+		<p class="post-content-small" style="border-left-color: #4b5563;" bind:this={postContent}>
+		{#await addFancyElements(post.content) then content}
+			{@html content}
+		{/await}
+	</p>
 	{/if}
 	{#if editError}
 		<p style="color: crimson;">{editError}</p>
 	{/if}
 	{#if !editing}
+		{#if $customTheme.style === "small"}
+		<div class="post-images smallImg">
+			{#each images as { title, url }}
+				<Attachment {title} {url} />
+			{/each}
+		</div>
+		{:else}
 		<div class="post-images">
 			{#each images as { title, url }}
 				<Attachment {title} {url} />
 			{/each}
 		</div>
+		{/if}
 	{/if}
 </Container>
-
+</div>
 <style>
+	.post {
+		height: fit-content;
+	}
 	.pfp {
 		margin-right: 0.2em;
 		padding: 0;
@@ -611,6 +676,15 @@
 	.creatordate {
 		margin-left: 0.5em;
 	}
+
+	:global(.small-creator) {
+		display: flex !important;
+		align-items: start !important;
+		gap: 0.1em !important;
+	}
+	:global(.small-creator h2) {
+		font-size: 175% !important;
+	}
 	.creator {
 		display: flex;
 		flex-wrap: wrap;
@@ -621,6 +695,13 @@
 		font-size: 200%;
 		margin: 0;
 		overflow-wrap: anywhere;
+	}
+
+
+	.post-content-small  {
+		position: relative;
+		padding-left: 4em;
+		margin-top: -3.5em;
 	}
 	:global(main.input-hover) .pfp:hover:not(:active) :global(.pfp),
 	:global(main.input-touch) .pfp:active :global(.pfp),
@@ -642,6 +723,9 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.25em;
+	}
+	.smallImg {
+		padding-left: 4em;
 	}
 
 	textarea {

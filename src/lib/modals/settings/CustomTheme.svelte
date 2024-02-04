@@ -54,9 +54,15 @@
 		<br />
 		<label for="Fg2">Foreground 2: </label>
 		<input type="color" id="Fg2" bind:value={theme.foregroundOrange} />
+		<br />
+		<label for="style"> Style: </label>
+		<select id="style" bind:value={theme.style}>
+			<option value="large">Large</option>
+			<option value="small">Small</option>
+		</select>
 		<br /><br />
 		<button on:click={() => (theme = fallback)}>Reset </button>
-		<br /><br />
+
 		{#if error}
 			<label for="json" style="color: crimson;"
 				><b>JSON: </b> <i>{error}</i></label
