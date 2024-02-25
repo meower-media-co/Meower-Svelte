@@ -23,7 +23,7 @@
 	import ReportUserModal from "./modals/safety/ReportUser.svelte";
 	import AccountBannedModal from "./modals/safety/AccountBanned.svelte";
 
-	import {authHeader, chats, ulist, user} from "./stores.js";
+	import {relationships, authHeader, chats, ulist, user} from "./stores.js";
 	import {apiUrl} from "./urls.js";
 	import {userFlags} from "./bitField.js";
 	import loadProfile from "./loadProfile.js";
@@ -199,7 +199,7 @@
 						on:click={$goto(`/users/${data._id}`)}
 					>
 						<PFP
-							online={$ulist.includes(data._id)}
+							online={$ulist.includes(data._id) && !($relationships[data._id] === 2 && $user.hide_blocked_users)}
 							icon={data._id === $user.name
 								? $user.pfp_data
 								: data.pfp_data}
@@ -209,7 +209,7 @@
 					</button>
 				{:else}
 					<PFP
-						online={$ulist.includes(data._id)}
+						online={$ulist.includes(data._id) && !($relationships[data._id] === 2 && $user.hide_blocked_users)}
 						icon={data._id === $user.name
 							? $user.pfp_data
 							: data.pfp_data}
@@ -228,14 +228,16 @@
 						</h1>
 					{/if}
 					<div class="profile-active">
-						{#if $ulist.includes(data._id)}
+						{#if $relationships[data._id] === 2 && $user.hide_blocked_users}
+							User Blocked
+						{:else if data.banned}
+							Banned
+						{:else if $ulist.includes(data._id)}
 							Online
 						{:else if (data.flags & userFlags.SYSTEM) === userFlags.SYSTEM}
 							System
 						{:else if (data.flags & userFlags.DELETED) === userFlags.DELETED}
 							Deleted
-						{:else if data.banned}
-							Banned
 						{:else if data.last_seen}
 							Offline since <FormattedDate
 								date={data.last_seen}
