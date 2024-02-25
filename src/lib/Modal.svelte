@@ -1,7 +1,8 @@
 <script>
 	import {createEventDispatcher, onDestroy} from "svelte";
-	import {scale, fade} from "svelte/transition";
+	import {scale, fade, slide} from "svelte/transition";
 	import {expoOut} from "svelte/easing";
+    import {mobile} from "./responsiveness.js";
 
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch("close");
@@ -52,23 +53,42 @@
 	transition:fade={{duration: 100, easing: expoOut}}
 />
 
-<div
-	class="modal"
-	role="dialog"
-	aria-modal="true"
-	bind:this={modal}
-	transition:scale={{start: 0.8, duration: 200, easing: expoOut}}
->
-	<div class="settings-controls">
-		{#if showClose}
-			<button class="circle close" title="Close modal" on:click={close} />
-		{/if}
-	</div>
+{#if $mobile}
+    <div
+	    class="bottom-sheet"
+	    role="dialog"
+	    aria-modal="true"
+	    bind:this={modal}
+	    transition:slide={{duration: 500, easing: expoOut}}
+    >
+        <div class="settings-controls">
+            {#if showClose}
+                <button class="circle close" title="Close modal" on:click={close} />
+            {/if}
+        </div>
 
-	<slot name="header" />
-	<hr />
-	<slot />
-</div>
+        <slot name="header" />
+        <slot />
+    </div>
+{:else}
+    <div
+	    class="modal"
+	    role="dialog"
+	    aria-modal="true"
+	    bind:this={modal}
+        transition:scale={{start: 0.8, duration: 200, easing: expoOut}}
+    >
+        <div class="settings-controls">
+            {#if showClose}
+                <button class="circle close" title="Close modal" on:click={close} />
+            {/if}
+        </div>
+
+        <slot name="header" />
+        <hr />
+        <slot />
+    </div>
+{/if}
 
 <style>
 	.modal-background {
@@ -96,4 +116,25 @@
 		border: solid 2px var(--orange);
 		border-radius: 5px;
 	}
+
+    .bottom-sheet {
+        z-index: 9999;
+        position: fixed;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%);
+        width: 91vw;
+        max-height: calc(100vh - 4em);
+        overflow: auto;
+        margin: 0;
+        padding: 1em;
+        background-color: var(--background);
+        border-radius: 30px 30px 0px 0px;
+    }
+
+    .settings-controls {
+	    top: 0.8em;
+	    right: 1em;
+	    gap: 0.25em;
+    }
 </style>
