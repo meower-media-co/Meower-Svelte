@@ -129,13 +129,10 @@
 	async function kick() {
 		kickStatus = "Kicking...";
 		try {
-			const resp = await fetch(
-				`${apiUrl}admin/users/${user._id}/kick`,
-				{
-					method: "POST",
-					headers: $authHeader,
-				}
-			);
+			const resp = await fetch(`${apiUrl}admin/users/${user._id}/kick`, {
+				method: "POST",
+				headers: $authHeader,
+			});
 			if (!resp.ok) {
 				throw new Error(
 					"Response code is not OK; code is " + resp.status
