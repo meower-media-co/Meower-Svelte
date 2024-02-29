@@ -2,6 +2,7 @@
 	Home but it's a group chat.
 -->
 <script>
+	import Invites from "../../lib/settings/chats/Invites.svelte";
 	import BasicModal from "../../lib/modals/Basic.svelte";
 	import ChangeChatNicknameModal from "../../lib/modals/chats/ChangeChatNickname.svelte";
 	import GCMemberModal from "../../lib/modals/chats/GCMember.svelte";
@@ -26,7 +27,8 @@
 	import PostList from "../../lib/PostList.svelte";
 
 	import {params, goto} from "@roxi/routify";
-	import {onMount, onDestroy} from "svelte/internal";
+	import {onMount, onDestroy, prevent_default} from "svelte/internal";
+	import BannedMembers from "../../lib/modals/chats/BannedMembers.svelte";
 
 	let chatsStoreSubscription;
 
@@ -43,6 +45,8 @@
 				created: 0,
 				last_active: 0,
 				deleted: false,
+				banned_users: [],
+				invites: [],
 			});
 
 			clm.link.send({
@@ -139,6 +143,8 @@
 			created: 0,
 			last_active: 0,
 			deleted: false,
+			banned_users: [],
+			invites: [],
 		});
 	});
 </script>
@@ -180,22 +186,7 @@
 							<button
 								class="circle settings"
 								on:click={() => {
-									if (
-										isRestricted(
-											userRestrictions.EDITING_CHAT_NICKNAMES
-										) &&
-										!$params.admin
-									) {
-										modals.showModal(AccountBannedModal, {
-											ban: $user.ban,
-											feature:
-												"editing group chat nicknames",
-										});
-									} else {
-										modals.showModal(
-											ChangeChatNicknameModal
-										);
-									}
+									$goto(`/chats/${$params.chatid}/settings`);
 								}}
 							/>
 						{/if}
@@ -411,5 +402,9 @@
 
 	.small {
 		font-size: 75%;
+	}
+
+	#HoverOver-Members {
+		cursor: pointer;
 	}
 </style>

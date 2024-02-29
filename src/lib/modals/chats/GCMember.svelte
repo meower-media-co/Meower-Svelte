@@ -10,6 +10,7 @@
 	import * as modals from "../../modals.js";
 
 	import {params, goto} from "@roxi/routify";
+	import BanMember from "./BanMember.svelte";
 
 	export let modalData;
 
@@ -47,6 +48,16 @@
 					})}
 			>
 				Make owner of chat
+			</button>
+			<button
+				class="long"
+				on:click={() => {
+					modals.replaceLastModal(BanMember, {
+						username,
+					});
+				}}
+			>
+				Ban user from chat
 			</button>
 		{/if}
 	</div>
