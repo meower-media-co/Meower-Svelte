@@ -1,5 +1,6 @@
 <!-- Brand new settings experience! -->
 <script>
+	import { width } from './../lib/responsiveness.js';
 	// @ts-nocheck
 
 	import {mobile} from "../lib/responsiveness.js";
@@ -280,5 +281,38 @@
 
 	.tabs-title {
 		margin: 0.25em;
+	}
+
+	@media (max-width: 800px) {
+		.settings {
+			flex-direction: column;
+		}
+		#tabs {
+			position: relative;
+			/* the tabs should take up minumum space */
+			min-height: fit-content;
+			height: fit-content;
+		}
+
+
+		#chat {
+			flex-grow: 0;
+			flex-shrink: 0;
+			flex-wrap: wrap;
+			width: 100%;
+			height: auto;
+			border: none;
+			border-top: solid 2px var(--orange);
+		}
+
+		:global(* .settings .profile-username) {
+
+			word-wrap:  break-word;
+			word-break: break-all;
+		}
+
+		:global(* .settings .profile-header-info) {
+			height: fit-content;
+		}
 	}
 </style>
