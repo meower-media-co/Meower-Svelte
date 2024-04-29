@@ -36,7 +36,6 @@
 				<!-- svelte-ignore a11y-media-has-caption -->
 				<video src={url} controls class="post-image" />
 			{:else if typeSplit == "audio"}
-				<!-- svelte-ignore a11y-media-has-caption -->
 				<audio controls>
 					<source src={url} />
 				</audio>

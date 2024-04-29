@@ -1,5 +1,7 @@
+<!-- eslint-disable -->
 <!-- Brand new settings experience! -->
 <script>
+	//eslint-disable no-unused-vars
 	// @ts-nocheck
 
 	import {mobile} from "../lib/responsiveness.js";

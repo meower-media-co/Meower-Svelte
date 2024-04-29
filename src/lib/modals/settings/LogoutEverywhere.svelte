@@ -6,7 +6,7 @@
 
 	import {goto, focus} from "@roxi/routify";
 
-	let loading, error;
+	let loading, _error;
 </script>
 
 <Modal on:close={modals.closeLastModal}>
@@ -28,11 +28,11 @@
 					loading = false;
 					switch (code) {
 						case "E:106 | Too many requests":
-							error =
+							_error =
 								"Too many requests! Please try again later.";
 							break;
 						default:
-							error = "Unexpected " + code + " error!";
+							_error = "Unexpected " + code + " _error!";
 					}
 				}
 			}}

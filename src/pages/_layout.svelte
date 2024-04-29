@@ -258,13 +258,6 @@
 		background-color: var(--background);
 	}
 
-	.banner {
-		background-color: crimson;
-		margin: 0;
-		padding: 0.5em;
-		text-align: center;
-	}
-
 	:global(main.layout-old) .main-screen {
 		flex-direction: column;
 	}
