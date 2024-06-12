@@ -18,6 +18,7 @@ export const intentionalDisconnect = writable(false);
 export const reconnecting = writable(false);
 export const disconnected = writable(false);
 export const disconnectReason = writable("");
+export const showMeowerDown = writable(false)
 
 // Last (blank) clicked
 export const profileClicked = writable("");

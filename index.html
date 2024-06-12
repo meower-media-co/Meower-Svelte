@@ -37,10 +37,83 @@
 		/>
 		<meta name="theme-color" content="#ff7432" />
 		<title>Meower</title>
-	</head>
+		<!--<style>
+			#browser-support {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 
+			.all-browsers {
+				position: absolute;
+				transform: translate(-50%, -50%);
+			}
+			.small {
+				height: 75px;
+				width: 75px;
+			}
+
+			#vivaldi {
+				top: 355px;
+				height: 140px;
+				width: 140px;
+				left: 325px;
+			}
+
+			#firefox {
+				top: 305px;
+				left: 460px;
+			}
+			#chrome {
+				top: 305px;
+				left: 560px;
+			}
+			#opera {
+				top: 390px;
+				left: 520px;
+			}
+		</style>
+		<script type="module">
+			import App from "./src/App.svelte";
+
+			function app() {
+				new App({
+					target: document.getElementById("app"),
+				});
+			}
+
+			var UA = navigator.userAgent.split(" ")
+			// @ts-ignore
+			UA = UA[UA.length-1]
+			var UA2 = UA[UA.length-2]
+
+			if (UA.includes("/")) {
+				// @ts-ignore
+				if ((UA.split("/")[0] == "Firefox" || UA.split("/")[0] == "OPR")) {
+					// @ts-ignore
+					if (parseInt(UA.split("/")[1]) >= 80) {
+						app()
+					} else {
+						document.body.innerHTML += '<div id="browser-support">	<img src="/src/assets/outdated.png" height="600px">	<a href="https://www.youtube.com/watch?v=Cz4aTSnFVvk" id="vivaldi" class="all-browsers"></a>	<a href="https://www.mozilla.org/firefox/" id="firefox" class="all-browsers small"></a>	<a href="https://www.google.com/chrome/" id="chrome" class="all-browsers small"></a>	<a href="https://www.opera.com/download" id="opera" class="all-browsers small"></a></div>'
+					}
+				}
+			}
+
+			if (UA2.includes("/")) {
+				if (UA2.split("/")[0] == "Chrome") { // Of course chrome needs the special treatment...
+					if (parseInt(UA2.split("/")[1]) >= 80) {
+						app()
+					} else {
+						document.body.innerHTML += '<div id="browser-support">	<img src="/src/assets/outdated.png" height="600px">	<a href="https://www.youtube.com/watch?v=Cz4aTSnFVvk" id="vivaldi" class="all-browsers"></a>	<a href="https://www.mozilla.org/firefox/" id="firefox" class="all-browsers small"></a>	<a href="https://www.google.com/chrome/" id="chrome" class="all-browsers small"></a>	<a href="https://www.opera.com/download" id="opera" class="all-browsers small"></a></div>'
+					}
+				}
+			}			
+		</script>-->>
+	</head>
 	<body>
 		<noscript><h1 class="nojs">Please enable JavaScript.</h1></noscript>
+		<img id="meower-logo" src="/src/assets/logo.svg" class="media-fullcenter"></img>
 		<div id="app"></div>
 		<script type="module" src="/src/main.js"></script>
 	</body>
