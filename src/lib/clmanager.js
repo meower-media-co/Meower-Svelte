@@ -118,6 +118,15 @@ if (localStorage.getItem("meower_savedconfig")) {
 	user.set(_user);
 }
 
+export function fix_ulist_blocked_users(_ulist) {
+	if (_user.hide_blocked_users) {
+		_ulist = _ulist.filter(
+			theuser => _relationships[theuser] !== 2
+		);
+	}
+	return _ulist
+}
+
 /**
  * The single CloudLink instance used by the manager.
  */
@@ -343,10 +352,11 @@ export async function connect() {
 		}
 	});
 	ulistEvent = link.on("ulist", cmd => {
-		const _ulist = cmd.val.split(";");
+		var _ulist = cmd.val.split(";");
 		if (_ulist[_ulist.length - 1] === "") {
 			_ulist.pop();
 		}
+		_ulist = fix_ulist_blocked_users(_ulist)
 		ulist.set(_ulist);
 	});
 	authEvent = link.on("direct", async cmd => {
@@ -388,19 +398,21 @@ export async function connect() {
 			user.set(_user);
 		}
 	});
-	relationshipUpdateEvent = link.on("direct", cmd => {
+	relationshipUpdateEvent = link.on("direct", async cmd => {
 		if (cmd.val.mode === "update_relationship") {
 			_relationships[cmd.val.payload.username] = cmd.val.payload.state;
 			relationships.set(_relationships);
+			link.send({cmd: "get_ulist", val:""})
 		}
 	});
-	configUpdateEvent = link.on("direct", cmd => {
+	configUpdateEvent = link.on("direct", async cmd => {
 		if (cmd.val.mode === "update_config") {
 			_user = {
 				..._user,
 				...cmd.val.payload,
 			};
 			user.set(_user);
+			link.send({cmd: "get_ulist", val:""})
 		}
 	});
 	chatCreateEvent = link.on("direct", cmd => {
@@ -477,7 +489,7 @@ export async function connect() {
 	try {
 		return await link.connect(linkUrl);
 	} catch (e) {
-		link.error("manager", "conenction error:", e);
+		link.error("manager", "connection error:", e);
 		modals.showModal(ConnectionFailedModal);
 		return e;
 	}

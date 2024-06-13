@@ -191,9 +191,8 @@
 		if ($user.hide_blocked_users) {
 			// @ts-ignore
 			result = result.filter(
-				post =>
-					$relationships[post._id] !== 2 &&
-					$relationships[post.u] !== 2
+				post => 
+					$relationships[post.user] !== 2
 			);
 		}
 		const numPages = json["pages"];
@@ -268,6 +267,11 @@
 				if (!cmd.val) return;
 
 				const isGC = postOrigin !== "home";
+
+				if (!(isGC && cmd.val.chatid === postOrigin)) {
+					if ($relationships[cmd.val.u] == 2 && $user.hide_blocked_users) return;
+				}
+
 				if (cmd.val.mode === "delete") {
 					if (adminView) return;
 					items = items.filter(post => post.post_id !== cmd.val.id);
