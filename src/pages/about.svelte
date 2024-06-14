@@ -404,7 +404,7 @@
 		</details>
 	</Container>
 	<Container>
-		<h2>1.4.2</h2>
+		<h2>1.4.3</h2>
 		<ul>
 			<li>Support webhook posts from @Webhooks bot</li>
 		</ul>
@@ -436,47 +436,183 @@
 		</ul>
 	</Container>
 	<Container>
-		<h2>1.4</h2>
-		<ul>
-			<li>Typing indicators, quotes, and line breaks</li>
-			<li>Fixed spam by holding down enter while ratelimited</li>
-			<li>Group chat members, adding and removing</li>
-			<li>Modals, replies and a bunch of other stuff</li>
-		</ul>
-	</Container>
-	<Container>
-		<h2>1.3</h2>
-		<ul>
-			<li>Group chats</li>
-			<li>Inbox</li>
-			<li>Discord Support</li>
-		</ul>
-	</Container>
-	<Container>
-		<h2>1.2</h2>
-		<ul><li>Mainly profiles</li></ul>
-	</Container>
-	<Container>
-		<h2>1.1.2</h2>
-		<ul><li>Group cat</li></ul>
-	</Container>
-	<Container>
-		<h2>1.1</h2>
-		<ul>
-			<li>Account deletion</li>
-			<li>Login saving</li>
-			<li>Fixed only being able to log in once per session</li>
-			<li>Add TOS/PP confirmation when creating an account</li>
-			<li>Fix "Let's go!" text in setup</li>
-		</ul>
-	</Container>
-	<Container>
-		<h2>1.0.1</h2>
-		<ul><li>Center login screen</li></ul>
-	</Container>
-	<Container>
-		<h2>1.0</h2>
-		<ul><li>Inital release</li></ul>
+		<h2>Notice</h2>
+		<ul><li>Versions earlier then this may not be 100% accurate, as these are based off commit history</li></ul>
+
+		<br />
+
+		<details>
+			<summary>Earlier Versions</summary>
+
+			<li>Setup: The screen where login, sign up and stuff are</li>
+			<br />
+
+			<h3>1.4.0</h3>
+			<ul>
+				<li>
+					Quotes
+				</li>
+				<li>
+					Reporting users
+				</li>
+				<li>
+					Bridged posts rework a little
+				</li>
+				<li>
+					Linebreak support for posting
+				</li>
+				<li>
+					Fix spam by holding down enter while ratelimited
+				</li>
+				<li>
+					Modals
+				</li>
+				<li>
+					Typing indicator
+				</li>
+				<li>
+					Group chat members, add members via name and removing members
+				</li>
+				<li>
+					Replies
+				</li>
+				<li>
+					Alot of fixes and other things
+				</li>
+			</ul>
+
+			<h3>1.3.0</h3>
+			<ul>
+				<li>
+					Bridged posts
+				</li>
+				<li>
+					Change passwords
+				</li>
+				<li>
+					Linebreaks (only in posts until 1.4)
+				</li>
+				<li>
+					Reporting/Deleting posts
+				</li>
+				<li>
+					Inbox
+				</li>
+				<li>
+					Group chats / Chat list
+				</li>
+				<li>
+					SFX
+				</li>
+				<li>
+					Shift-click group chats to access group cat
+				</li>
+			</ul>
+
+			<h3>1.2.0</h3>
+			<ul>
+				<li>
+					Store tokens instead of passwords
+				</li>
+				<li>
+					Basic NoJS screen
+				</li>
+				<li>
+					Add text to group cat (Yes very important to tell you this)
+				</li>
+				<li>
+					View other user Profiles
+				</li>
+				<li>
+					Add buttons to report a user, view recent posts, and add to chats
+				</li>
+			</ul>
+
+			<h3>1.1.4</h3>
+			<ul>
+				<li>
+					Dark mode toggle hell
+				</li>
+				<li>
+					Remove start screen
+				</li>
+				<li>
+					More setup improvements
+				</li>
+			</ul>
+
+			<h3>1.1.3</h3>
+			<ul>
+				<li>
+					Rework checkboxes
+				</li>
+				<li>
+					Fix broken PFPs
+				</li>
+			</ul>
+
+			<h3>1.1.2</h3>
+			<ul>
+				<li>
+					Group cat
+				</li>
+			</ul>
+
+			<h3>1.1.1</h3>
+			<ul>
+				<li>
+					Fix background color on white inputs
+				</li>
+				<li>
+					Fix dates being over-italic on firefox
+				</li>
+			</ul>
+
+			<h3>1.1</h3>
+			<ul>
+				<li>
+					Account deletion
+				</li>
+				<li>
+					Login saving 
+				</li>
+				<li>
+					Fix only being able to log in once per session
+				</li>
+				<li>
+					Add TOS/Privacy Policy confirmation when creating an account
+				</li>
+				<li>
+					Fix "Let's Go!" text in setup
+				</li>
+				<li>
+					Reworked setup
+				</li>
+			</ul>
+
+			<h3>1.0.1</h3>
+			<ul>
+				<li>
+					Center setup
+				</li>
+				<li>
+					Add limits to how many characters the username and password have
+				</li>
+			</ul>
+
+			<h3>1.0</h3>
+			<ul>
+				<li>
+					Inital Release
+				</li>
+				<li>
+					PFP Hotfix
+				</li>
+				<li>
+					"How can lastpass fill passwords into a PLAIN TEXTBOX"
+				</li>
+			</ul>
+		</details>
 	</Container>
 </Container>
 
@@ -494,6 +630,10 @@
 
 	.links {
 		margin-bottom: 1em;
+	}
+
+	#long {
+		width: 100%;
 	}
 
 	.contributors-list {
