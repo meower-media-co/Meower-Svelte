@@ -22,7 +22,6 @@
 	import profile from "../assets/profile.svg";
 	import settings from "../assets/settings.svg";
 	import logout from "../assets/logout.svg";
-	import changelog from "../assets/changelog.svg";
 	import info from "../assets/info.svg";
 
 	import {fade} from "svelte/transition";

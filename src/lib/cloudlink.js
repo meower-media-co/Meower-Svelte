@@ -25,8 +25,6 @@
  * SOFTWARE.
  */
 
-import sleep from "./sleep.js";
-
 /**
  * A callback type used for packet events.
  *

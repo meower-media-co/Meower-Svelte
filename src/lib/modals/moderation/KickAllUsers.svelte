@@ -7,7 +7,7 @@
 
 	import sleep from "../../sleep";
 
-	let loading, error;
+	let _loading, error;
 </script>
 
 <Modal on:close={modals.closeLastModal}>
@@ -15,7 +15,7 @@
 	<div slot="default">
 		<form
 			on:submit|preventDefault={async () => {
-				loading = true;
+				_loading = true;
 				try {
 					const resp = await fetch(`${apiUrl}admin/server/kick-all`, {
 						method: "POST",
@@ -29,7 +29,7 @@
 					modals.closeLastModal();
 				} catch (e) {
 					error = e;
-					loading = false;
+					_loading = false;
 				}
 			}}
 		>

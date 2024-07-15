@@ -11,8 +11,6 @@
 		User,
 		Paintbrush,
 		Lock,
-		Smartphone,
-		Contact,
 		ShieldBan,
 		Flag,
 		Info,

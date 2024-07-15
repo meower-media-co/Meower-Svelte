@@ -191,8 +191,13 @@
 		if ($user.hide_blocked_users) {
 			// @ts-ignore
 			result = result.filter(
+				/*
+				* @type {import('./types.js').ListPost | import('./types.js').User} post
+				*/
 				post =>
+					// @ts-ignore
 					$relationships[post._id] !== 2 &&
+					// @ts-ignore
 					$relationships[post.u] !== 2
 			);
 		}
@@ -223,6 +228,7 @@
 		};
 		list.addItem(pendingPost);
 
+		// eslint-disable-next-line no-async-promise-executor
 		const postProm = new Promise(async (resolve, reject) => {
 			try {
 				const resp = await fetch(
