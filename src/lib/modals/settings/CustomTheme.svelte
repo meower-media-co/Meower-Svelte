@@ -3,9 +3,9 @@
 
 	import {user, customTheme} from "../../stores.js";
 	import {
-		fallback,
 		stringToTheme,
 		themeToString,
+		get_True_Fallback,
 		applyTheme,
 		removeTheme,
 	} from "../../CustomTheme.js";
@@ -61,7 +61,12 @@
 		<label for="Fg2">Foreground 2: </label>
 		<input type="color" id="Fg2" bind:value={theme.foregroundOrange} />
 		<br /><br />
-		<button on:click={() => (theme = fallback)}>Reset </button>
+		<button on:click={() => {theme = get_True_Fallback()}}>Reset to default theme</button>
+		<button on:click={() => {
+			if ($user.theme.includes("custom:")) {
+				theme = stringToTheme($user.theme)
+			}
+		}} disabled = {!$user.theme.includes("custom:")}>Reset to saved theme</button>
 		<br /><br />
 		{#if error}
 			<label for="json" style="color: crimson;"

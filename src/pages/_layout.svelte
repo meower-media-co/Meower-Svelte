@@ -19,6 +19,8 @@
 	import {mobile, touch} from "../lib/responsiveness.js";
 	import * as BGM from "../lib/BGM.js";
 
+	import {getTintColor} from "../lib/CustomTheme.js";
+
 	import {afterPageLoad, params} from "@roxi/routify";
 	import {tick} from "svelte";
 
@@ -51,8 +53,8 @@
 	id="main"
 	style:--orange={$useCustomTheme ? $customTheme.orange : null}
 	style:--orange-button={$useCustomTheme ? $customTheme.orange : null}
-	style:--orange-light={$useCustomTheme ? $customTheme.orangeLight : null}
-	style:--orange-dark={$useCustomTheme ? $customTheme.orangeDark : null}
+	style:--orange-light={$useCustomTheme ? getTintColor(false, $customTheme) : null}
+	style:--orange-dark={$useCustomTheme ? getTintColor(true, $customTheme) : null}
 	style:--background={$useCustomTheme ? $customTheme.background : null}
 	style:--foreground={$useCustomTheme ? $customTheme.foreground : null}
 	style:--foreground-orange={$useCustomTheme
