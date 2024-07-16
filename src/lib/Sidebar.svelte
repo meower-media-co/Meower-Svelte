@@ -217,8 +217,12 @@
 		width: 100%;
 		z-index: 10;
 		position: absolute;
-		background-color: var(--background);
+		background-color: #000000;
 		opacity: 0.33;
+	}
+
+	:global(main.layout-old) .locked {
+		width: 110%;
 	}
 
 	.logo {

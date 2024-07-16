@@ -26,7 +26,7 @@
 	</div>
 
 	<h2>Layout</h2>
-	The layout is currently set to {$user.layout}.
+	You are currently using the "{$user.layout}" layout
 </Container>
 <Container>
 	<div class="settings-controls">

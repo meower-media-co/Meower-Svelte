@@ -1,6 +1,10 @@
 <script>
 	import OOBECustomizePFP from "./CustomizePFP.svelte";
 	import OOBECustomizeTheme from "./CustomizeTheme.svelte";
+	import OOBEIntroduction from "./Introduction.svelte";
+	import OOBEEnd from "./End.svelte";
+	import OOBEEasterEgg from "./EasterEgg.svelte"
+	import OOBEQuote from "./Quote.svelte"
 
 	import {OOBERunning, OOBEPage} from "../stores.js";
 	import * as clm from "../clmanager.js";
@@ -8,7 +12,7 @@
 	import {onMount} from "svelte";
 
 	$: allowPrevious = $OOBEPage > 0;
-	$: allowNext = $OOBEPage < 2;
+	$: allowNext = $OOBEPage < 4;
 
 	onMount(() => {
 		clm.updateProfile({});
@@ -17,20 +21,21 @@
 </script>
 
 <div class="wrapper">
-	<div class="main">
-		<div class="setup">
+	<div class="pages">
+		<div class="inner">
 			<div class="fullcenter">
 				{#if $OOBEPage == 0}
-					<OOBECustomizePFP />
+					<OOBEIntroduction />
 				{:else if $OOBEPage == 1}
-					<OOBECustomizeTheme />
+					<OOBECustomizePFP />
 				{:else if $OOBEPage == 2}
-					<h1>That's it!</h1>
-					<button
-						on:click={() => {
-							OOBERunning.set(false);
-						}}>Let's go!</button
-					>
+					<OOBEQuote />
+				{:else if $OOBEPage == 3}
+					<OOBECustomizeTheme />
+				{:else if $OOBEPage == 4}
+					<OOBEEnd />
+				{:else if $OOBEPage == 8}
+					<OOBEEasterEgg />
 				{:else}
 					<p>You aren't supposed to be here.</p>
 					<p>Current Page: {$OOBEPage}</p>
@@ -40,7 +45,6 @@
 	</div>
 	<div class="footer">
 		<button
-			class="full"
 			disabled={!allowPrevious}
 			on:click={() => {
 				OOBEPage.set($OOBEPage - 1);
@@ -49,13 +53,11 @@
 			&lt;- Back
 		</button>
 		<button
-			class="center full"
 			on:click={() => {
 				OOBERunning.set(false);
 			}}>Skip</button
 		>
 		<button
-			class="right full"
 			disabled={!allowNext}
 			on:click={() => {
 				OOBEPage.set($OOBEPage + 1);
@@ -68,24 +70,41 @@
 
 <style>
 	.wrapper {
+		margin: 0;
 		width: 100%;
 		height: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 
-	.main {
-		height: calc(100% - 3em);
-	}
-
-	.setup {
+	.pages {
 		text-align: center;
-		display: table;
+		flex-grow: 1;
+		flex-shrink: 1;
+		overflow: hidden;
 	}
 
 	.footer {
+		flex-grow: 0;
+		flex-shrink: 0;
+		padding-left: 1em;
+		padding-right: 1em;
 		height: 3em;
 		display: flex;
 		align-items: stretch;
 		justify-content: space-between;
+		background-color: var(--orange-dark);
+	}
+
+	.footer button {
+		height: 80%;
+		align-self: center;
+		border: 0;
+	}
+
+	.inner {
+		height: calc(100vh - 3em);
+		overflow: auto;
 	}
 
 	.fullcenter {
@@ -94,7 +113,7 @@
 		box-sizing: border-box;
 
 		margin: auto;
-		overflow: auto;
+		overflow: none;
 
 		display: table-cell;
 		vertical-align: middle;

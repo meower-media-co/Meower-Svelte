@@ -98,18 +98,15 @@
 			<div class="sidebar">
 				<Sidebar />
 			</div>
-			<div class="view">
-				<!-- banner (maybe for future use)
-				<div class="banner">
-					<span>This is a banner!</span>
-				</div>
-				-->
-				{#if $OOBERunning}
+			{#if $OOBERunning}
+				<div class="viewnopad">
 					<OOBE />
-				{:else if !remounting}
+				</div>
+			{:else if !remounting}
+				<div class="view">
 					<slot />
-				{/if}
-			</div>
+				</div>
+			{/if}
 		</div>
 	{/if}
 
@@ -259,6 +256,20 @@
 		--view-height: calc(100vh - 0.66em);
 
 		background-color: var(--background);
+		transition: 0.25s;
+	}
+
+	.viewnopad {
+		flex-grow: 1;
+		flex-shrink: 1;
+
+		box-sizing: border-box;
+		overflow: auto;
+
+		--view-height: calc(100vh - 0.66em);
+
+		background-color: var(--background);
+		transition: 0.25s;
 	}
 
 	:global(main.layout-old) .main-screen {
